@@ -1,5 +1,9 @@
 /* Rock, paper, scissors */
 
+var TIE = 0;
+var USER_WINS = 1;
+var CPU_WINS = 2;
+
 function validate_input(input)
 {
     return input === "paper" ||
@@ -12,7 +16,7 @@ function compare_hands(hand_1, hand_2)
     if (hand_1 == hand_2)
     {
         //console.log("tie\r\n");
-        return 0;
+        return TIE;
     }
     else
     {
@@ -21,12 +25,12 @@ function compare_hands(hand_1, hand_2)
             hand_1 == "scissors" && hand_2 == "paper")
         {
             //console.log("User wins\r\n");
-            return 1;
+            return USER_WINS;
         }
         else
         {
             //console.log("Cpu wins\r\n");
-            return 2;
+            return CPU_WINS;
         }
     }
 }
@@ -35,18 +39,26 @@ function game(hand_usr, hand_cpu)
 {
     if(validate_input(hand_usr) && validate_input(hand_cpu))
     {
-        if (compare_hands(hand_usr, hand_cpu) === 0)
+
+        switch (compare_hands(hand_usr, hand_cpu))
         {
-            console.log("tie\r\n");
+            case TIE:
+                console.log("tie\r\n");
+                break;
+
+            case USER_WINS:
+                console.log("User wins\r\n");
+                break;
+
+            case CPU_WINS:
+                console.log("Cpu wins\r\n");
+                break;
+            
+            default:
+                // Never reach this
+                console.log("Not valid response\r\n");
         }
-        else if (compare_hands(hand_usr, hand_cpu) === 1)
-        {
-            console.log("User wins\r\n");
-        }
-        else if (compare_hands(hand_usr, hand_cpu) === 2)
-        {
-            console.log("Cpu wins\r\n");
-        }
+
     }
     else
     {
@@ -54,9 +66,9 @@ function game(hand_usr, hand_cpu)
     }
 }
 
-game("rock", "scissors");
-game("scissors", "paper");
-game("paper", "rock");
+game("rock", "scissors"); //user
+game("paper", "scissors"); //pc
+game("paper", "paper"); //tie
 
 game("1", "scissors.");
 game("paper", 5);
